@@ -1,12 +1,11 @@
 from sqlalchemy.orm import Session
 from sqlalchemy import MetaData
-from app.helpers.logger import logging as logger
+from echo_harvest.helpers.logger import logging as logger
 from sqlalchemy import create_engine
-from app.internals.models import BaseModel
+from echo_harvest.internals.models import BaseModel
+import config
 
-engine = create_engine(
-    "postgresql+psycopg2://postgres:12345678@localhost/player", echo=False
-)
+engine = create_engine(config.DATABASE_URL, echo=False)
 meta = MetaData()
 
 
@@ -23,4 +22,4 @@ def get_db():
 
 def create_table():
     BaseModel.metadata.create_all(engine)
-    logger.info("DATABASE::CREATE_TABLE:tracks_metadata")
+    logger.warn("DATABASE::CREATE_TABLE:tracks_metadata")

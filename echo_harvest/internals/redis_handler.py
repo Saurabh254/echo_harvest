@@ -1,8 +1,7 @@
 from redis import Redis
-from app.internals.schemas import MetaData
-from app.helpers.logger import logging as logger
+from echo_harvest.internals.schemas import MetaData
+from echo_harvest.helpers.logger import logging as logger
 import json
-import time
 
 
 class RedisHandler:
@@ -15,7 +14,7 @@ class RedisHandler:
         metadata = self.redis.get(self._key)
         if metadata:
             metadata = json.loads(metadata)
-        logger.info(f"REDIS::GET:{metadata}")
+        logger.debug(f"REDIS::GET:{metadata}")
         return metadata
 
     def store_track_metadata(self, metadata: MetaData) -> None:
@@ -25,4 +24,4 @@ class RedisHandler:
             self.redis.delete(self._key)
 
         self.redis.set(self._key, json.dumps(metadata.__dict__, default=str))
-        logger.info(f"REDIS::INSERT:{metadata}")
+        logger.debug(f"REDIS::INSERT:{metadata}")
