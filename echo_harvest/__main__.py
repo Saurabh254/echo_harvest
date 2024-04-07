@@ -26,14 +26,17 @@ class App:
         create_table()
 
 
+import asyncio
+
+
 def threaded_app_with_socket():
     app = App(sys.argv)
-    app = Thread(target=app.run)
-    socket = Thread(target=socket_base.start_socket_connection)
-    app.start()
-    socket.start()
-    app.join()
-    socket.join()
+    task1 = Thread(target=app.run)
+    task2 = Thread(target=lambda: asyncio.run(socket_base.main()))
+    task1.start()
+    task2.start()
+    task1.join()
+    task2.join()
 
 
 if __name__ == "__main__":
