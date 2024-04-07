@@ -10,7 +10,7 @@ serversocket.bind((host, port))
 
 def start_socket_connection():
     serversocket.listen(5)
-    print("server started and listening")
+    logger.info("SOCKET::SERVER:STARTED: Server started and listening")
     while 1:
         (clientsocket, address) = serversocket.accept()
         logger.info("SOCKET::SERVER:CLIENT_REQUEST: Connect to {}".format(address))
