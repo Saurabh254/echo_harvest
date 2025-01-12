@@ -1,0 +1,18 @@
+2025-01-12 14:22:22,670 - root - INFO - Starting Threaded App
+2025-01-12 14:22:22,670 - root - INFO - Started PlayerCTL app
+2025-01-12 14:24:00,814 - __main__ - INFO - Starting Threaded App
+2025-01-12 14:24:00,815 - __main__ - INFO - Started PlayerCTL app
+2025-01-12 14:24:21,334 - __main__ - INFO - Starting Threaded App
+2025-01-12 14:24:21,334 - __main__ - INFO - Started PlayerCTL app
+2025-01-12 14:45:58,825 - root - INFO - Starting Threaded App
+2025-01-12 14:45:58,825 - root - INFO - Started PlayerCTL app
+INFO    |__main__.py         |   43|2025-01-12 14:47:07,496  |threaded_app_with_socket|  25589| 133584863210368|MainThread               |__main__            |/home/saurabh254/codes/echo_harvest/server/__main__.py|Starting Threaded App
+INFO    |__main__.py         |   32|2025-01-12 14:47:07,497  |run                 |  25589| 133584690083520|Thread-1 (run)           |__main__            |/home/saurabh254/codes/echo_harvest/server/__main__.py|Started PlayerCTL app
+INFO    |__main__.py         |   43|2025-01-12 14:47:22,275  |threaded_app_with_socket|  25640| 132625638337408|MainThread               |__main__            |/home/saurabh254/codes/echo_harvest/server/__main__.py|Starting Threaded App
+INFO    |__main__.py         |   32|2025-01-12 14:47:22,276  |run                 |  25640| 132625539552960|Thread-1 (run)           |__main__            |/home/saurabh254/codes/echo_harvest/server/__main__.py|Started PlayerCTL app
+INFO    |__main__.py         |   43|2025-01-12 14:47:33,020  |threaded_app_with_socket|  25703| 140710750071680|MainThread               |__main__            |/home/saurabh254/codes/echo_harvest/server/__main__.py|Starting Threaded App
+INFO    |__main__.py         |   32|2025-01-12 14:47:33,020  |run                 |  25703| 140710577698496|Thread-1 (run)           |__main__            |/home/saurabh254/codes/echo_harvest/server/__main__.py|Started PlayerCTL app
+INFO    |__main__.py         |   42|2025-01-12 14:47:46,679  |threaded_app_with_socket|  25772| 139817914690432|MainThread               |__main__            |/home/saurabh254/codes/echo_harvest/server/__main__.py|Starting Threaded App
+INFO    |__main__.py         |   31|2025-01-12 14:47:46,679  |run                 |  25772| 139817816032960|Thread-1 (run)           |__main__            |/home/saurabh254/codes/echo_harvest/server/__main__.py|Started PlayerCTL app
+INFO    |__main__.py         |   44|2025-01-12 14:54:24,992  |threaded_app_with_socket|  26201| 126650604292992|MainThread               |__main__            |/home/saurabh254/codes/echo_harvest/server/__main__.py|Starting Threaded App
+INFO    |__main__.py         |   33|2025-01-12 14:54:24,992  |run                 |  26201| 126650505569984|Thread-1 (run)           |__main__            |/home/saurabh254/codes/echo_harvest/server/__main__.py|Started PlayerCTL app

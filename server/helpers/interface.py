@@ -1,20 +1,23 @@
 from sqlalchemy.orm import Session
-from echo_harvest.internals.models import TrackMetaData
-from echo_harvest.internals.schemas import MetaData, MetaDataResp
+
+from server.helpers.dependency_injector import inject_redis
+from server.internals.models import TrackMetaData
+from server.internals.redis_handler import GiEventHandler
+from server.internals.schemas import MetaData, MetaDataResp
 from datetime import datetime, timedelta
-from echo_harvest.helpers.logger import logging as logger
-from echo_harvest.internals.redis_handler import RedisHandler
+import redis.asyncio as aioredis
+import logging
 
 
 def insert_metadata_into_db(metadata: MetaData, db: Session) -> MetaData:
     metadata = TrackMetaData(**metadata.__dict__)
     try:
-        logger.debug(f"DATABASE::INSERT:{metadata}")
+        logging.debug(f"DATABASE::INSERT:{metadata}")
         db.add(metadata)
         db.commit()
         db.refresh(metadata)
     except Exception as e:
-        logger.critical("DATABASE::INSERT:ERROR : Unable to insert ({})".format(e))
+        logging.critical("DATABASE::INSERT:ERROR : Unable to insert ({})".format(e))
     return metadata
 
 
@@ -45,11 +48,10 @@ def get_stored_tracks_metadata(
     # metadata["current_playing"] = handler.get_current_track()
     return metadata
 
-
-def get_current_track_from_redis(metadata, redis: RedisHandler, db: Session) -> dict:
-
-    resp = redis.get_last_player_metadata()
+@inject_redis
+async def get_current_track_from_redis(metadata: MetaData, player_event: GiEventHandler) -> dict:
+    resp = await player_event.get_last_player_metadata()
     if resp:
         return resp
-    redis.store_track_metadata(metadata=metadata)
+    await player_event.store_track_metadata(metadata=metadata)
     return metadata.__dict__

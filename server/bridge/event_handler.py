@@ -1,7 +1,7 @@
 import json
-from echo_harvest.helpers import interface
-from echo_harvest.internals.schemas import TracksStatusResp
-from echo_harvest.internals.database import get_db
+from server.helpers import interface
+from server.internals.schemas import TracksStatusResp
+from server.internals.database import get_db
 from sqlalchemy.orm import Session
 
 

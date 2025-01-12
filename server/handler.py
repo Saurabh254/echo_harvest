@@ -1,36 +1,35 @@
+from typing import Type
+
 import gi
 
-from echo_harvest.internals.schemas import MetaData
-import redis
-from echo_harvest.internals.redis_handler import RedisHandler
-from echo_harvest.helpers import interface
-from echo_harvest.internals.database import get_db
+from server.helpers.dependency_injector import inject_redis
+from server.internals.schemas import MetaData
+import redis.asyncio as aioredis
+from server.internals.redis_handler import GiEventHandler
+from server.helpers import interface
+from server.internals.database import get_db
 from sqlalchemy.orm import Session
-from echo_harvest.helpers.logger import logging as logger
+import logging
 import config
 
 gi.require_version("Playerctl", "2.0")
+from gi.repository import Playerctl
 
-from gi.repository import Playerctl  # noqa: E402
+player_glb = Playerctl.Player()
 
-_redis = redis.Redis(host=config.REDIS_HOSTNAME)
-redis = RedisHandler(redis=_redis)
-player = Playerctl.Player()
-
-
-def on_play(player, status):
-
+@inject_redis
+def on_play(player: Type[Playerctl.Player], status, redis_conn: aioredis.Redis):
     db: Session = next(get_db())
+    player_handler = GiEventHandler(redis_conn)
     metadata = MetaData(
         title=player.get_title(),
         artist=player.get_artist(),
         album=player.get_album(),
         duration=player.get_position(),
     )
-    logger.info("PlayerCtl::Play : Playing - {}".format(metadata))
-    last_music = redis.get_last_player_metadata()
+    logging.info("PlayerCtl::Play : Playing - {}".format(metadata))
+    last_music = player_handler.get_last_player_metadata()
     if last_music and (last_music["title"] != metadata.title):
-
         interface.insert_metadata_into_db(metadata=MetaData(**last_music), db=db)
 
     if last_music is None or last_music["title"] != metadata.title:
